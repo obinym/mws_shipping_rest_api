@@ -1,0 +1,105 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /mwsstat:
+    get:
+      operationId: "mwsApi.status"
+      tags:
+        - "MWS"
+      summary: "Reading status of service"
+      description: "Check MWS status by creating API call"
+      responses:
+        200:
+          description: "Executed MWS API call"
+          schema:
+            type: "array"
+            items:
+              properties:
+                status:
+                  type: "string"
+                text:
+                  type: "string"
+                timestamp:
+                  type: "string"
+  /mwsorder:
+    get:
+      operationId: "mwsApi.order_get"
+      tags:
+        - "MWS"
+      summary: "Reading order items"
+      description: "Read order items to call next API"
+      parameters:
+        - name: OrderId
+          in: query
+          description: ID of order to return
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Executed MWS API call"
+          schema:
+            type: "array"
+            items:
+              properties:
+                LatestShipDate:
+                  type: "string"
+                ASIN:
+                  type: "string"
+                SellerSKU:
+                  type: "string"
+                OrderItemId:
+                  type: "string"
+  /mwslabel:
+    get:
+      operationId: "mwsApi.print_shipping_label_for_order"
+      tags:
+        - "MWS"
+      summary: "Create label for first order items"
+      description: "Read order and create shipment API send label to printer"
+      parameters:
+        - name: OrderId
+          in: query
+          description: ID of order to return
+          required: true
+          type: "string"
+        - name: TestFlag
+          in: query
+          description: do not create new label
+          required: true
+          type: "boolean"
+        - name: PrinterIp
+          in: query
+          description: IP for label printer
+          required: true
+          type: "string"
+        - name: PrinterPort
+          in: query
+          description: Port for label printer
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Executed MWS API call"
+          schema:
+            type: "array"
+            items:
+              properties:
+                LabelString:
+                  type: "string"
+                ShipmentId:
+                  type: "string"
+                TrackingId:
+                  type: "string"
+                ShippingServiceId:
+                  type: "string"
