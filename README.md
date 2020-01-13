@@ -8,7 +8,7 @@ applications. "Get a label for a given order"
 It will provide a very simplistic web server to call the API with few parameters
 potentially bypassing all the nice security features and avoiding ugly XML parsing.
 
-You will need to create a local setAwsSecrets.py file to make it rung and make sure
+You will need to create a local setAwsSecrets.py file to make it run and make sure
 your secrets remain secret!
 
 Take care when using it - and be warned not use it for industrial purposes as
