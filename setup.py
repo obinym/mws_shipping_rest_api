@@ -7,6 +7,7 @@ setup(
     author='obinym',
     author_email='obiny@com',
     description='see above',
-    packages={['mwsshippingrestapi'],['mws.yml']},    
+    packages=['mwsshippingrestapi'],
+    data_files=['mws.yml'],
     install_requires=['flask','connexion'],
 )
