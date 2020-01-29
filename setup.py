@@ -7,6 +7,6 @@ setup(
     author='obinym',
     author_email='obiny@com',
     description='see above',
-    packages=find_packages(),    
+    packages=['mwsshippingrestapi'],    
     install_requires=[],
 )
