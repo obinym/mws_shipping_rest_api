@@ -9,5 +9,5 @@ setup(
     description='see above',
     packages=['mwsshippingrestapi'],
     include_package_data=True,
-    install_requires=['flask','connexion'],
+    install_requires=['flask','connexion[swagger-ui]'],
 )
