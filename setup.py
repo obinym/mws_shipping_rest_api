@@ -8,6 +8,6 @@ setup(
     author_email='obiny@com',
     description='see above',
     packages=['mwsshippingrestapi'],
-    data_files=['mws.yml'],
+    data_files=['mwsshippingrestapi/mws.yml'],
     install_requires=['flask','connexion'],
 )
