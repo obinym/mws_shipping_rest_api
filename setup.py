@@ -8,5 +8,5 @@ setup(
     author_email='obiny@com',
     description='see above',
     packages=['mwsshippingrestapi'],    
-    install_requires=['flask'],
+    install_requires=['flask','connexion'],
 )
