@@ -60,7 +60,7 @@ def order_get(OrderId):
                     "ASIN": item.ASIN,
                     "SellerSKU": item.SellerSKU,
                     "OrderItemId": item.OrderItemId,
-                    "QuantityShipped":item.QuantityOrdered,
+                    "QuantityShipped": item.QuantityOrdered,
                     }
                 }
         except: # 1 item
@@ -71,7 +71,7 @@ def order_get(OrderId):
                 "ASIN": items.ASIN,
                 "SellerSKU": items.SellerSKU,
                 "OrderItemId": items.OrderItemId,
-                "QuantityShipped":items.QuantityOrdered,
+                "QuantityShipped": items.QuantityOrdered,
                 }
             }
         return [MWS[key] for key in sorted(MWS.keys())]
@@ -98,8 +98,18 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
         shipping_service_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceId
         mws_response = ss.original
     except:
-        shipping_service_id = 'NONE'
-        api_failed = True       
+        # more than one shipping service available
+        try:
+        #   shipping_service_id = ss.parsed.ShippingServiceList.ShippingService[0].ShippingServiceId
+            shipping_services = ss.parsed.ShippingServiceList.ShippingService
+            for shipping_service in shipping_services:
+                shipping_service_id = shipping_service.ShippingServiceId
+            api_failed = False
+            print('[ERROR]: Multiple Services - selecting the first')
+        except:
+            print('[ERROR]: No Shipping Service Found at all')  
+            shipping_service_id = 'NONE'
+            api_failed = True       
     MWS = {
         "ShippingService": {
             "ShippingServiceId": shipping_service_id,
@@ -211,7 +221,7 @@ def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort):
                 shipping_service_id = service_mws[0]["ShippingServiceId"]
             # if not in test we would now create the shipment
                 if TestFlag == False:
-                    shipping_service_id = 'TEST'
+#                    shipping_service_id = 'TEST'
                     shipment_mws=create_shipment(
                         amazon_order_id=test_data["amazon_order_id"],
                         amazon_pack_length=test_data["amazon_pack_length"],
