@@ -31,8 +31,8 @@ def status():
     }
     return [MWS[key] for key in sorted(MWS.keys())]
 
-def order_get(OrderId):
-    init()
+def order_get(OrderId, MwsKey):
+    init(key=MwsKey.encode())
     access_key = os.getenv('mws_access_key')
     secret_key = os.getenv('mws_secret_key')
     SellerId = os.getenv('mws_account_id')
@@ -83,7 +83,7 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
     amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
     amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity
     ):
-    init()
+    # init()
     access_key = os.getenv('mws_access_key')
     secret_key = os.getenv('mws_secret_key')
     SellerId = os.getenv('mws_account_id')
@@ -117,10 +117,7 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
             "timestamp": get_timestamp()
         }
     }
-    if api_failed == False:
-        f = open('shipping_api.pkl', 'wb')
-        pickle.dump(mws_response, f)
-        f.close()
+
     return [MWS[key] for key in sorted(MWS.keys())]
 
 def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
@@ -129,7 +126,7 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
     amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity,
     amazon_ship_service_id, amazon_label_format
     ):
-    init()
+    # init()
     access_key = os.getenv('mws_access_key')
     secret_key = os.getenv('mws_secret_key')
     SellerId = os.getenv('mws_account_id')
@@ -176,7 +173,7 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
 # REMOVE TEST CODE IN PRODUCTION
     return [MWS[key] for key in sorted(MWS.keys())]
 
-def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort):
+def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort, MwsKey):
     get_shipping_test_data()
     api_status=status()[0]["status"]
     if api_status == 'GREEN':
@@ -185,7 +182,7 @@ def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort):
 #        print(OrderId)
 #        print(test_data["amazon_order_id"])
         test_data["amazon_order_id"]=OrderId
-        order_mws=order_get(OrderId=test_data["amazon_order_id"])
+        order_mws=order_get(OrderId=test_data["amazon_order_id"], MwsKey=MwsKey)
 #        print(order_mws)
         try:
             test_data["first_order_item_id"]=order_mws[0]["OrderItemId"]

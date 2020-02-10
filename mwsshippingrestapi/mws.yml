@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
   description: This is the swagger file that goes with our server code
-  version: "1.0.0"
-  title: Swagger REST Article
+  version: "1.0.1"
+  title: Swagger REST MWS Label
 consumes:
   - "application/json"
 produces:
@@ -41,6 +41,11 @@ paths:
       description: "Read order items to call next API"
       parameters:
         - name: OrderId
+          in: query
+          description: ID of order to return
+          required: true
+          type: "string"
+        - name: MwsKey
           in: query
           description: ID of order to return
           required: true
@@ -86,6 +91,11 @@ paths:
         - name: PrinterPort
           in: query
           description: Port for label printer
+          required: true
+          type: "string"
+        - name: MwsKey
+          in: query
+          description: ID of order to return
           required: true
           type: "string"
       responses:
