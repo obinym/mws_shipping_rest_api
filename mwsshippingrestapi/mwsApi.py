@@ -270,25 +270,25 @@ def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort, Mw
                         shipping_service_id = 'SERVICE-NOT-AVAILABLE'
                         shipment_id = '123-234-345-567'
                         tracking_id = '123234345456'
-                        label = b'abcdefghi'
+                        label = 'abcdefghi'
                         mws_message = "MWS API called in test mode - PRINTING FAILED"
             else:
                 shipping_service_id = 'SERVICE-NOT-AVAILABLE'
                 shipment_id = '123-234-345-567'
                 tracking_id = '123234345456'
-                label = b'abcdefghi'
+                label = 'abcdefghi'
                 mws_message = 'No matching MWS Shipment Service available'
         else:
             shipping_service_id = 'Order-NOT-AVAILABLE'
             shipment_id = '123-234-345-567'
             tracking_id = '123234345456'
-            label = b'abcdefghi'
+            label = 'abcdefghi'
             mws_message = 'No matching Order found at MWS Order Service'
     else: # MWS offline
         shipping_service_id = 'MWS-NOT-AVAILABLE'
         shipment_id = '123-234-345-567'
         tracking_id = '123234345456'
-        label = b'abcdefghi'
+        label = 'abcdefghi'
         mws_message = 'MWS or client are offline'
     MWS = {
         "Shipment": {
