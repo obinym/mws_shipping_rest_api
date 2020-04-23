@@ -164,10 +164,10 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
     }
     if api_failed == False:
 # SAVE LABEL FOR FUTURE TESTING
-        f = open('/home/ub/python/flask/shipping_api.pkl', 'wb')
+        f = open('~/shipping_api.pkl', 'wb')
         pickle.dump(mws_response,f)
         f.close()
-        f = open('/home/ub/python/flask/shipping_api_json.pkl', 'wb')
+        f = open('~/shipping_api_json.pkl', 'wb')
         pickle.dump(MWS,f)
         f.close()
 # REMOVE TEST CODE IN PRODUCTION
