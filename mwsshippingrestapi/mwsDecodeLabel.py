@@ -21,12 +21,12 @@ def print_label(label_zpl, host, port):
         print_label_usb(label_zpl)
 
 def print_label_usb(label_zpl):
-    f = open('/home/ub/python/flask/zpl_label.zpl', 'wb')
+    f = open('~/zpl_label.zpl', 'wb')
     f.write(label_zpl)
     f.close()
     # transfer temporary file to usb printer
     try:
-        script = "cat /home/ub/python/flask/zpl_label.zpl > /dev/usb/lp0"
+        script = "cat ~/zpl_label.zpl > /dev/usb/lp0"
         os.system(script)
         print('[INFO]: successfully send zpl label to USB printer at LP0')
     except:
@@ -60,7 +60,7 @@ def ungzip_label(label_zip):
     except:
         print("[ERROR] Could not unzip file with gzip")
 def get_test_label():
-    f = open('/home/ub/python/flask/shipping_api_json.pkl', 'rb')
+    f = open('~/shipping_api_json.pkl', 'rb')
     json_file = pickle.load(f)
     f.close()
     json_label=json_file['Shipment']['label']
