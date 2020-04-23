@@ -124,7 +124,7 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
     amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
     amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
     amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity,
-    amazon_ship_service_id, amazon_label_format
+    amazon_ship_service_id, amazon_ship_service_offer_id, amazon_label_format
     ):
     # init()
     access_key = os.getenv('mws_access_key')
@@ -137,7 +137,8 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
         ss = shipping_api.create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
         amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
         amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
-        amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity, amazon_ship_service_id, amazon_label_format
+        amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity,  
+        amazon_ship_service_id, amazon_ship_service_offer_id, amazon_label_format
         )
         mws_response = ss.original
 #        print(mws_response)
@@ -216,6 +217,7 @@ def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort, Mw
             )
             if api_failed == False:
                 shipping_service_id = service_mws[0]["ShippingServiceId"]
+                shipping_service_offer_id = service_mws[0]["ShippingServiceOfferId"]
             # if not in test we would now create the shipment
                 if TestFlag == False:
 #                    shipping_service_id = 'TEST'
@@ -241,6 +243,7 @@ def print_shipping_label_for_order(OrderId, TestFlag, PrinterIp, PrinterPort, Mw
                         first_order_item_id=test_data["first_order_item_id"], 
                         first_item_quantity=test_data["first_item_quantity"],
                         amazon_ship_service_id=shipping_service_id,
+                        amazon_ship_service_offer_id=shipping_service_offer_id,
                         amazon_label_format=test_data["amazon_label_format"] #'ZPL203'
                     )
                     json_label=shipment_mws[0]["label"]
