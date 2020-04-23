@@ -90,13 +90,17 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
 
     shipping_api = mws.MerchantFulfillment(access_key=access_key,secret_key=secret_key,account_id=SellerId,region='DE')
     api_failed = False
+
+    ss = shipping_api.get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
+    amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
+    amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
+    amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity)
     try:
-        ss = shipping_api.get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
-        amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
-        amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
-        amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity)
         shipping_service_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceId
+        shipping_service_offer_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceOfferId
         mws_response = ss.original
+        api_failed = False
+        print('[INFO]: Unique shipping service {} found'.format(shipping_service_id))
     except:
         # more than one shipping service available
         try:
@@ -105,11 +109,13 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
             for shipping_service in shipping_services:
                 shipping_service_id = shipping_service.ShippingServiceId
                 shipping_service_offer_id = shipping_service.ShippingServiceOfferId
+            mws_response = ss.original
             api_failed = False
-            print('[ERROR]: Multiple Services - selecting the first')
+            print('[ERROR]: Multiple Services - selecting the first {}'.format(shipping_service_id))
         except:
             print('[ERROR]: No Shipping Service Found at all')  
             shipping_service_id = 'NONE'
+            shipping_service_offer_id = 'NONE'
             api_failed = True       
     MWS = {
         "ShippingService": {
