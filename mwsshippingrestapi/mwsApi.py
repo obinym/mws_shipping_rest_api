@@ -104,6 +104,7 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
             shipping_services = ss.parsed.ShippingServiceList.ShippingService
             for shipping_service in shipping_services:
                 shipping_service_id = shipping_service.ShippingServiceId
+                shipping_service_offer_id = shipping_service.ShippingServiceOfferId
             api_failed = False
             print('[ERROR]: Multiple Services - selecting the first')
         except:
@@ -113,6 +114,7 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
     MWS = {
         "ShippingService": {
             "ShippingServiceId": shipping_service_id,
+            "ShippingServiceOfferId": shipping_service_offer_id,
             "text": "MWS API Call",
             "timestamp": get_timestamp()
         }
