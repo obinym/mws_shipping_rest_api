@@ -173,12 +173,15 @@ def create_shipment(amazon_order_id, amazon_pack_length, amazon_pack_width, amaz
     }
     if api_failed == False:
 # SAVE LABEL FOR FUTURE TESTING
-        f = open('~/shipping_api.pkl', 'wb')
-        pickle.dump(mws_response,f)
-        f.close()
-        f = open('~/shipping_api_json.pkl', 'wb')
-        pickle.dump(MWS,f)
-        f.close()
+        try:
+            f = open('~/shipping_api.pkl', 'wb')
+            pickle.dump(mws_response,f)
+            f.close()
+            f = open('~/shipping_api_json.pkl', 'wb')
+            pickle.dump(MWS,f)
+            f.close()
+        except:
+            print('[INFO]: could not store pkl files')
 # REMOVE TEST CODE IN PRODUCTION
     return [MWS[key] for key in sorted(MWS.keys())]
 
