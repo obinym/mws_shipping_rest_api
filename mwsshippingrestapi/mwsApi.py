@@ -17,7 +17,7 @@ def status():
     secret_key = os.getenv('mws_secret_key')
     SellerId = os.getenv('mws_account_id')
     orders_api = mws.Orders(access_key=access_key,secret_key=secret_key,account_id=SellerId,region='DE')
-    print('[INFO]: Running MWS API Version 1.0.3.']
+    print('[INFO]: Running MWS API Version 1.0.3.')
     try:
         ss = orders_api.get_service_status()
         mws_status = ss.parsed.Status
