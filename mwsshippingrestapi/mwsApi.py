@@ -90,11 +90,14 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
 
     shipping_api = mws.MerchantFulfillment(access_key=access_key,secret_key=secret_key,account_id=SellerId,region='DE')
     api_failed = False
-
-    ss = shipping_api.get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
-    amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
-    amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
-    amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity)
+    try:
+        ss = shipping_api.get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width, amazon_pack_height, amazon_pack_dim_unit,
+        amazon_pack_weight, amazon_pack_weight_unit, amazon_from_name, amazon_from_street, amazon_from_city,
+        amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
+        amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity)
+    except:
+        print('[ERROR]: could not run shipping_api.get_shipping_service)
+        api_failed = True
     try:
         shipping_service_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceId
         shipping_service_offer_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceOfferId
