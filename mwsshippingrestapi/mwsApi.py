@@ -97,7 +97,7 @@ def get_shipping_service(amazon_order_id, amazon_pack_length, amazon_pack_width,
         amazon_from_pcode, amazon_from_ccode, amazon_from_email, amazon_from_phone, amazon_delivery_exp,
         amazon_pickup, amazon_pack_value_curr, amazon_pack_value, first_order_item_id, first_item_quantity)
     except:
-        print('[ERROR]: could not run shipping_api.get_shipping_service)
+        print('[ERROR]: could not run shipping_api.get_shipping_service')
         api_failed = True
     try:
         shipping_service_id = ss.parsed.ShippingServiceList.ShippingService.ShippingServiceId
