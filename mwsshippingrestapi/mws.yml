@@ -138,11 +138,9 @@ paths:
             type: "array"
             items:
               properties:
-                LatestShipDate:
+                status:
                   type: "string"
-                ASIN:
+                text:
                   type: "string"
-                SellerSKU:
-                  type: "string"
-                OrderItemId:
+                timestamp:
                   type: "string"
