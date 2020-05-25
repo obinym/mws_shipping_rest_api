@@ -32,6 +32,33 @@ def status():
     }
     return [MWS[key] for key in sorted(MWS.keys())]
 
+def inventory_post(Feed, MwsKey):
+    MARKETPLACEID = 'A1PA6795UKMFR9' # DE
+    init(key=MwsKey.encode())
+    access_key = os.getenv('mws_access_key')
+    secret_key = os.getenv('mws_secret_key')
+    SellerId = os.getenv('mws_account_id')
+    feeds_api = mws.Feeds(access_key=access_key,secret_key=secret_key,account_id=SellerId,region='DE')
+    feed = Feed.encode('utf-8')
+    try:
+        ss = feeds_api.get_service_status()
+        mws_status = ss.parsed.Status
+        result = feeds_api.submit_feed(feed, '_POST_INVENTORY_AVAILABILITY_DATA_',marketplaceids=MARKETPLACEID)
+        print('feeds_api call OK')
+        text = result.parsed
+    except:
+        api_failed = True
+        mws_status = 'RED'
+        text = feed
+        print('feeds_api call failed')
+    if api_failed == False:
+        MWS = {
+            "Feeds": {
+                "status": mws_status,
+                "text": text,
+                "timestamp": get_timestamp()
+            }
+        }
 def order_get(OrderId, MwsKey):
     init(key=MwsKey.encode())
     access_key = os.getenv('mws_access_key')
