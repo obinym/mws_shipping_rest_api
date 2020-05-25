@@ -113,3 +113,36 @@ paths:
                   type: "string"
                 ShippingServiceId:
                   type: "string"
+  /mwsinvfeed:
+    get:
+      operationId: "mwsApi.inventory_post"
+      tags:
+        - "MWS"
+      summary: "Feeding SKU inventory"
+      description: "Feed inventory for multiple items in tab separated string"
+      parameters:
+        - name: feed
+          in: query
+          description: inventory feed
+          required: true
+          type: "string"
+        - name: MwsKey
+          in: query
+          description: secret to authenticate
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Executed MWS API call"
+          schema:
+            type: "array"
+            items:
+              properties:
+                LatestShipDate:
+                  type: "string"
+                ASIN:
+                  type: "string"
+                SellerSKU:
+                  type: "string"
+                OrderItemId:
+                  type: "string"
